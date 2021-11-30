@@ -7,20 +7,43 @@ import node23.Model.Player;
 
 public class SetGames {
 
-    public static void instantiateGames() {
-        ArrayList<String> logLines = LogReader.ReadLog();
-        ArrayList<Game> games = LogParser.getGames();
-        for (Game game : games) {
-            setGame(game, logLines);
-        }
-        for (Game game : games) {
-            System.out.println(game.toString());
-        }
+    static ArrayList<String> logLines = LogReader.ReadLog();
+    static ArrayList<Game> games = LogParser.getGames();
+    static ArrayList<Integer> doneList = new ArrayList<Integer>();
+    static int index = 0;
 
-        // TODO run function setGame to all games in games (This must be in parallel)
+    public static void instantiateGames() {
+        while(doneList.size() <21){
+            if(index == 21){
+                index = 0;
+            }
+            new Thread(t1).start();
+            index++;
+        }
+    }
+    
+    private static Runnable t1 = new Runnable() {
+        public void run() {
+            setGame(logLines);
+        }
+    };
+
+    public static boolean isDone(int index){
+        for (Integer done : doneList) {
+            if(index == done) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public static void setGame(Game game, ArrayList<String> logLines) {
+    public static void setGame(ArrayList<String> logLines) {
+        int localIndex = index;
+        if(isDone(localIndex) == true){
+            return;
+        }
+        doneList.add(localIndex);
+        Game game = games.get(localIndex);
 
         for (int i = game.getStartLine(); i < game.getEndLine(); i++) {
             String line = logLines.get(i);
@@ -31,6 +54,7 @@ public class SetGames {
                 registerKill(line, game);
             }
         }
+        System.out.println(game.toString());
     }
 
     public static void registerKill(String line, Game game) {
