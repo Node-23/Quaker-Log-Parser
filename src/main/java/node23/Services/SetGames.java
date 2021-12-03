@@ -11,15 +11,17 @@ public class SetGames {
     static ArrayList<Game> games = LogParser.getGames();
     static ArrayList<Integer> doneList = new ArrayList<Integer>();
     static int index = 0;
+    static int iterationIndex;
 
-    public static void instantiateGames() {
+    public static ArrayList<Game> instantiateGames() {
         while(doneList.size() <21){
-            if(index == 21){
+            if(index >= 21){
                 index = 0;
             }
             new Thread(t1).start();
             index++;
         }
+        return games;
     }
     
     private static Runnable t1 = new Runnable() {
@@ -29,7 +31,8 @@ public class SetGames {
     };
 
     public static boolean isDone(int index){
-        for (Integer done : doneList) {
+        ArrayList<Integer> localDoneList = doneList;
+        for (Integer done : localDoneList) {
             if(index == done) {
                 return true;
             }
@@ -54,7 +57,7 @@ public class SetGames {
                 registerKill(line, game);
             }
         }
-        System.out.println(game.toString());
+        // System.out.println(game.toString());
     }
 
     public static void registerKill(String line, Game game) {
