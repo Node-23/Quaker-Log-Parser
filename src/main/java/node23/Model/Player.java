@@ -47,4 +47,10 @@ public class Player {
     public String toString() {
         return getName() + " : " + getKills();
     }
+
+    // @Override
+    // public int compareTo(Object playerToCompare) {
+    //     int compareKills = ((Player) playerToCompare).getKills();
+    //     return Integer.compare(this.kills,compareKills);
+    // }
 }

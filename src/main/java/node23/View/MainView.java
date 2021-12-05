@@ -62,7 +62,11 @@ public class MainView extends JFrame implements FocusListener, ActionListener, W
         }
         
         if (e.getSource() == rankingButton) {
-            
+            try {
+                new RankView(games);
+            } catch (BadLocationException e1) {
+                e1.printStackTrace();
+            }
         }
     }
 
