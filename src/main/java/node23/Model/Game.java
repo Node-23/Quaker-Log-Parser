@@ -1,6 +1,8 @@
 package node23.Model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Objects;
 
 public class Game {
     private int id;
@@ -100,5 +102,27 @@ public class Game {
         }
         resume += "players: [" + playersList + "]";
         return resume;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, totalKills, players, startLine, endLine);
+    }
+
+    public String gameRaking(){
+        String rank = "";
+        ArrayList<Player> playersByRanking = players;
+        players.sort((o1, o2)-> Integer.compare(o2.getKills(),o1.getKills()));
+        rank += "Game " + this.hashCode() + ": {\n";
+        
+        for (int i = 0; i < playersByRanking.size(); i++) {
+            if(i == playersByRanking.size()-1){
+                rank += "   " + playersByRanking.get(i).getName() + ": " + playersByRanking.get(i).getKills() + " kills\n}";
+                continue;
+            }
+            rank += "   " + playersByRanking.get(i).getName() + ": " + playersByRanking.get(i).getKills() + " kills,\n";
+        }
+
+        return rank;
     }
 }
