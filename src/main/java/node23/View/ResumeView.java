@@ -27,7 +27,7 @@ public class ResumeView extends JFrame implements ActionListener, WindowListener
         this.games = games;    
         this.setTitle("Quaker Log Parser");
         this.setResizable(false);
-        this.setSize(500,300);
+        this.setSize(500,500);
         this.setLayout(null);
         setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.DARK_GRAY);
@@ -53,7 +53,7 @@ public class ResumeView extends JFrame implements ActionListener, WindowListener
         jtp.setBackground(Color.DARK_GRAY);
         jtp.setText(games.get(index).toString()); 
         jtp.setForeground(Color.WHITE);
-        jtp.setBounds(40, 0, 400, 300);
+        jtp.setBounds(40, 0, 400, 500);
         this.add(jtp);
 
         this.setVisible(true);

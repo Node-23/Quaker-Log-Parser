@@ -1,13 +1,13 @@
 package node23.Model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Objects;
 
 public class Game {
     private int id;
     private int totalKills;
     private ArrayList<Player> players;
+    private ArrayList<DeathTypes> gameDeaths;
     private int startLine;
     private int endLine;
 
@@ -16,6 +16,7 @@ public class Game {
         this.startLine = startLine;
         this.endLine = endLine;
         this.players = new ArrayList<Player>();
+        this.gameDeaths = new ArrayList<DeathTypes>();
         this.totalKills = 0;
     }
 
@@ -67,6 +68,18 @@ public class Game {
         this.endLine = endLine;
     }
 
+    public ArrayList<DeathTypes> getGameDeaths() {
+        return this.gameDeaths;
+    }
+
+    public void setGameDeaths(ArrayList<DeathTypes> gameDeaths) {
+        this.gameDeaths = gameDeaths;
+    }
+
+    public void addGameDeath(DeathTypes newGameDeath) {
+        this.gameDeaths.add(newGameDeath);
+    }
+
     @Override
     public String toString() {
         String gameResume = "";
@@ -75,6 +88,7 @@ public class Game {
         gameResume += "  " + playersList() + "\n";
         gameResume += "  kills:{\n" + killsList() + "\n  }\n";  
         gameResume +="}\n";
+        gameResume += deathTypeResume();
         return gameResume;
     }
 
@@ -114,7 +128,6 @@ public class Game {
         ArrayList<Player> playersByRanking = players;
         players.sort((o1, o2)-> Integer.compare(o2.getKills(),o1.getKills()));
         rank += "Game " + this.hashCode() + ": {\n";
-        
         for (int i = 0; i < playersByRanking.size(); i++) {
             if(i == playersByRanking.size()-1){
                 rank += "   " + playersByRanking.get(i).getName() + ": " + playersByRanking.get(i).getKills() + " kills\n}";
@@ -122,7 +135,22 @@ public class Game {
             }
             rank += "   " + playersByRanking.get(i).getName() + ": " + playersByRanking.get(i).getKills() + " kills,\n";
         }
-
         return rank;
+    }
+
+    public String deathTypeResume(){
+        String resume = "";
+        resume += "Game-" + getId() + ": {\n";
+        resume += "    kills_by_means: {\n";
+        for (int i = 0; i < getGameDeaths().size(); i++) {
+            if(i == getGameDeaths().size()-1){
+                resume += "         " + getGameDeaths().get(i).getMeanOfDeath() + ": " + getGameDeaths().get(i).getQuantity();
+                continue;
+            }
+            resume += "         " + getGameDeaths().get(i).getMeanOfDeath() + ": " + getGameDeaths().get(i).getQuantity() + ",\n";
+        }
+    resume += "\n   }";
+        resume += "\n}";
+        return resume;
     }
 }
