@@ -1,4 +1,4 @@
-# Bet App
+# Quaker Log Parser
 
 ## - Project description -
     This project is based on this challenge: https://gist.github.com/adbatista/d5b0d4335da0cddc98739c8885626c35
